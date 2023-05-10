@@ -26,3 +26,5 @@ Route::controller(\App\Http\Controllers\Api\AuthController::class)
 Route::middleware('auth:api')->get('/me', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('books', \App\Http\Controllers\BookController::class);
