@@ -23,16 +23,6 @@ class Author extends Model
         'name',
     ];
 
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            User::class,
-            'book_user_pivot',
-            'author_id',
-            'user_id'
-        );
-    }
-
     public function books(): BelongsToMany
     {
         return $this->belongsToMany(

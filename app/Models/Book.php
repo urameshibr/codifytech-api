@@ -24,16 +24,6 @@ class Book extends Model
         'page_amount',
     ];
 
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            User::class,
-            'book_user_pivot',
-            'book_id',
-            'user_id'
-        );
-    }
-
     public function authors(): BelongsToMany
     {
         return $this->belongsToMany(

@@ -53,14 +53,4 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-
-    public function books(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Book::class,
-            'book_user_pivot',
-            'user_id',
-            'book_id'
-        );
-    }
 }
