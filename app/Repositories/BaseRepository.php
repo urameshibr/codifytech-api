@@ -34,9 +34,15 @@ class BaseRepository
         return $this->model->newQuery();
     }
 
-    public function getPaginated(): LengthAwarePaginator
+    public function getPaginated(array $params = []): LengthAwarePaginator
     {
-        return $this->getNewQuery()->paginate(
+        $query = $this->getNewQuery();
+
+        if (!empty($params['include']) && is_array($params['include'])) {
+            $query->with($params['include']);
+        }
+
+        return $query->paginate(
             request('per_page', 10)
         );
     }

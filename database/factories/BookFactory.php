@@ -28,6 +28,8 @@ class BookFactory extends Factory
         return [
             'title'       => $title,
             'page_amount' => $this->faker->numberBetween(200, 500),
+            'cover_image' => $this->faker->imageUrl('195', '278', 'book'),
+            'description' => $this->faker->text(255),
         ];
     }
 }

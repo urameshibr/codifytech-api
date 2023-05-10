@@ -22,6 +22,8 @@ class Book extends Model
     protected $fillable = [
         'title',
         'page_amount',
+        'cover_image',
+        'description',
     ];
 
     public function authors(): BelongsToMany

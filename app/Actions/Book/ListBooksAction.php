@@ -14,8 +14,8 @@ class ListBooksAction
         $this->bookRepository = $bookRepository;
     }
 
-    public function __invoke(): LengthAwarePaginator
+    public function __invoke(array $params = []): LengthAwarePaginator
     {
-        return $this->bookRepository->getPaginated();
+        return $this->bookRepository->getPaginated($params);
     }
 }

@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->string('title', 100);
             $table->integer('page_amount')->nullable();
+            $table->string('cover_image')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

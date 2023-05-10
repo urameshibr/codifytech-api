@@ -20,9 +20,12 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $data = Action::dispatch(ListBooksAction::class);
+        $data = Action::dispatch(
+            ListBooksAction::class,
+            $request->all()
+        );
 
         $message = ['message' => 'Lista de registros.'];
 
