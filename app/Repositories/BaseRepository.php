@@ -48,7 +48,13 @@ class BaseRepository
 
     public function find(string|int $id, array $relations = []): ?Model
     {
-        return $this->model->find($id)->load($relations);
+        $row = $this->model->find($id);
+
+        if (!empty($row) && !empty($relations)) {
+            $row->load($relations);
+        }
+
+        return $row;
     }
 
     public function create(array $data)

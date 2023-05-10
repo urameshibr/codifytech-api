@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Action;
+use App\Actions\Book\DeleteBookAction;
 use App\Actions\Book\ListBooksAction;
 use App\Actions\Book\ShowBookAction;
 use App\Actions\Book\StoreBookAction;
@@ -21,11 +22,13 @@ class BookController extends Controller
      */
     public function index(): JsonResponse
     {
-
         $data = Action::dispatch(ListBooksAction::class);
 
+        $message = ['message' => 'Lista de registros.'];
+
         return response()->json(
-            $data
+            array_merge($message, $data->toArray()),
+            Response::HTTP_OK
         );
     }
 
@@ -48,8 +51,10 @@ class BookController extends Controller
             throw $exception;
         }
 
-        return response()->json(
-            $data,
+        return response()->json([
+            'message' => 'Registro foi incluído.',
+            'data'    => $data,
+        ],
             Response::HTTP_CREATED
         );
     }
@@ -65,9 +70,10 @@ class BookController extends Controller
             $request->input('include', []),
         );
 
-        return response()->json(
-            $data
-        );
+        return response()->json([
+            'message' => 'Informações do registro.',
+            'data'    => $data,
+        ],);
     }
 
     /**
@@ -89,9 +95,11 @@ class BookController extends Controller
             throw $exception;
         }
 
-        return response()->json(
-            $data,
-            Response::HTTP_CREATED
+        return response()->json([
+            'message' => 'Registro foi atualizado.',
+            'data'    => $data,
+        ],
+            Response::HTTP_OK
         );
     }
 
@@ -100,6 +108,24 @@ class BookController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $data = Action::dispatch(
+                DeleteBookAction::class,
+                $id
+            );
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        return response()->json([
+            'message' => 'Registro foi excluído.',
+            'data'    => $data,
+        ],
+            Response::HTTP_OK
+        );
     }
 }
