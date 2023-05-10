@@ -70,6 +70,10 @@ class BookController extends Controller
             $request->input('include', []),
         );
 
+        if (empty($data)) {
+            abort(404, 'Registro não encontrado');
+        }
+
         return response()->json([
             'message' => 'Informações do registro.',
             'data'    => $data,

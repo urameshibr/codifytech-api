@@ -9,7 +9,7 @@ class ShowBookAction
 {
     use UsesBookRepository;
 
-    public function __invoke(string|int $id, array $relations): Model
+    public function __invoke(string|int $id, array $relations): ?Model
     {
         return $this->bookRepository->find($id, $relations);
     }
