@@ -6,7 +6,9 @@ use App\Actions\Action;
 use App\Actions\Book\ListBooksAction;
 use App\Actions\Book\ShowBookAction;
 use App\Actions\Book\StoreBookAction;
+use App\Actions\Book\UpdateBookAction;
 use App\Http\Requests\Book\StoreBookRequest;
+use App\Http\Requests\Book\UpdateBookRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -71,9 +73,26 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateBookRequest $request, string $id): JsonResponse
     {
-        //
+        DB::beginTransaction();
+        try {
+            $data = Action::dispatch(
+                UpdateBookAction::class,
+                $id,
+                $request->validated()
+            );
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        return response()->json(
+            $data,
+            Response::HTTP_CREATED
+        );
     }
 
     /**
