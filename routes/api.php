@@ -28,3 +28,5 @@ Route::middleware('auth:api')->get('/me', function (Request $request) {
 });
 
 Route::apiResource('books', \App\Http\Controllers\BookController::class);
+
+Route::apiResource('authors', \App\Http\Controllers\AuthorController::class)->only(['index']);

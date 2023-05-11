@@ -22,7 +22,8 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('book_author_pivot', function (Blueprint $table) {
-            //
+            $table->dropForeign('book_id');
+            $table->dropForeign('author_id');
         });
     }
 };

@@ -3,16 +3,12 @@
 namespace App\Actions\Book;
 
 use App\Repositories\BookRepository;
+use App\Traits\UsesBookRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ListBooksAction
 {
-    protected BookRepository $bookRepository;
-
-    public function __construct(BookRepository $bookRepository)
-    {
-        $this->bookRepository = $bookRepository;
-    }
+    use UsesBookRepository;
 
     public function __invoke(array $params = []): LengthAwarePaginator
     {
